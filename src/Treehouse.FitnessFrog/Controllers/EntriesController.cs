@@ -64,7 +64,7 @@ namespace Treehouse.FitnessFrog.Controllers
             if (ModelState.IsValid)
             {
                 _entriesRepository.AddEntry(entry);
-
+                TempData["Message"] = "Your entry was successfully added!";
                 return RedirectToAction("Index");
             }
             SetupActivitiesSelectListItems();
@@ -109,6 +109,7 @@ namespace Treehouse.FitnessFrog.Controllers
             if(ModelState.IsValid)
             {
                 _entriesRepository.UpdateEntry(entry);
+                TempData["Message"] = "Your entry was successfully updated";
                 return RedirectToAction("Index");
             }
 
@@ -125,8 +126,30 @@ namespace Treehouse.FitnessFrog.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            return View();
+
+            //TODO retrieve entry for the provided ID parameter value
+            Entry entry = _entriesRepository.GetEntry((int)id);
+            //return "not found" if the entry was not found
+            if(entry == null)
+            {
+                return HttpNotFound();
+            }
+            //TODO pass the entry to the view
+            return View(entry);
         }
+        
+        [HttpPost]
+        public ActionResult Delete(int id)
+        {
+            //TODO Delete the entry.
+            _entriesRepository.DeleteEntry(id);
+
+            TempData["Message"] = "Your entry was successfully deleted";
+
+            //TODO redirect to the "entries" list page
+            return RedirectToAction("Index");
+        }
+
         private void ValidateEntry(Entry entry)
         {
             //if there aren't any "Duration" field validation errors
