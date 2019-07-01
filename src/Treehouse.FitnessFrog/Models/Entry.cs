@@ -58,11 +58,14 @@ namespace Treehouse.FitnessFrog.Models
         /// <summary>
         /// The date of the entry. Should not include a time portion.
         /// </summary>
+        /// 
+        // Auto Required Field
         public DateTime Date { get; set; }
 
         /// <summary>
         /// The activity ID for the entry. The ID value should map to an ID in the activities collection.
         /// </summary>
+        /// Auto Required Field
         [Display(Name = "Activity")]
         public int ActivityId { get; set; }
 
@@ -74,6 +77,7 @@ namespace Treehouse.FitnessFrog.Models
         /// <summary>
         /// The duration for the entry (in minutes).
         /// </summary>
+        /// Auto Required Field
         public double Duration { get; set; }
 
         /// <summary>
@@ -84,11 +88,14 @@ namespace Treehouse.FitnessFrog.Models
         /// <summary>
         /// Whether or not this entry should be excluded when calculating the total fitness activity.
         /// </summary>
+        /// Auto Required Field
         public bool Exclude { get; set; }
 
         /// <summary>
         /// The notes for the entry.
         /// </summary>
+        
+        [MaxLength(200, ErrorMessage = "Notes field cannot be longer than 200 characters.")]
         public string Notes { get; set; }
     }
 }
